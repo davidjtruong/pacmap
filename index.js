@@ -278,59 +278,54 @@ function gameStart() {
 	}); 
 }
 
-function keyDownHandler(e) {
-    var ew = e.which;
-    if (ew == 38) {
-        updown = true;
-        return false;
-    } else if (ew == 39) {
-        rightdown = true;
-        return false;
-    } else if (ew == 40) {
-        downdown = true;
-        return false;
-    } else if (ew == 37) {
-        leftdown = true;
-        return false;
-    } else if (ew == 32) {
-        if (!gametimer) {
-            if (stillPrecaching) {
-                stillPrecaching = false;
-            } else {
-                gameStart();
-            } 
-        } else {
-            $("#running").text("Stopped");
-            clearTimeout(gametimer);
-            gametimer = null;
-        }
-        return false;
-    }            
-}
+// left
+shortcut.add("A", function () {
+	leftdown = true;
+}, {'type':'keydown', 'keycode':65});
 
-function keyUpHandler(e) {
-    var ew = e.which;
-    if (ew == 38) {
-        updown = false;
-        return false;
-    } else if (ew == 39) {
-        rightdown = false;
-        return false;
-    } else if (ew == 40) {
-        downdown = false;
-        return false;
-    } else if (ew == 37) {
-        leftdown = false;
-        return false;
-    }
-}
+shortcut.add("A", function () {
+	leftdown = false;
+}, {'type':'keyup', 'keycode':65});
 
-$(document).ready(function(){
-    //console.log($("body"));
-    keycodediv = $("#keycode");
-    $("#running").text("Stopped");
-    keytextarea = $("#keypc");
-    keytextarea.keydown(keyDownHandler);
-    keytextarea.keyup(keyUpHandler);
-    keytextarea.focus();
+// right
+shortcut.add("D", function () {
+	rightdown = true;
+}, {'type':'keydown', 'keycode':68});
+
+shortcut.add("D", function () {
+	rightdown = false;
+}, {'type':'keyup', 'keycode':68});
+
+// up
+shortcut.add("W", function () {
+	updown = true;
+}, {'type':'keydown', 'keycode':87});
+
+shortcut.add("W", function () {
+	updown = false;
+}, {'type':'keyup', 'keycode':87});
+
+// down
+shortcut.add("S", function () {
+	downdown = true;
+}, {'type':'keydown', 'keycode':83});
+
+shortcut.add("S", function () {
+	downdown = false;
+}, {'type':'keyup', 'keycode':83});
+
+// space
+shortcut.add("Space", function () {
+	if (!gametimer) {
+		if (stillPrecaching) {
+		    stillPrecaching = false;
+		} else {
+		    gameStart();
+		} 
+	} else {
+		$("#running").text("Stopped");
+		clearTimeout(gametimer);
+		gametimer = null;
+	}
 });
+
