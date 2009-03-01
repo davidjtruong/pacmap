@@ -94,7 +94,7 @@ function movePacman() {
                 minYawI = i;
             }
         }
-        if (buttonPressed && minYawDiff > 55) {
+        if (buttonPressed && minYawDiff > 75) {
             cPacYaw = cPacGSVLink.yaw;
             buttonPressed = false;
         } else {
@@ -329,3 +329,6 @@ shortcut.add("Space", function () {
 	}
 });
 
+function select(box) {
+	map.setCenter(cities[box.value], 16);
+}

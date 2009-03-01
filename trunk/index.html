@@ -30,6 +30,14 @@ var orange;
 var red;
 var pink;
 
+var cities = {
+	'Seattle' : new GLatLng(47.6232, -122.355),
+	'Portland' : new GLatLng(45.5283, -122.7068),
+	'San Francisco' : new GLatLng(37.7529, -122.4511),
+	'New York' : new GLatLng(40.7500, -73.9879),
+	'Los Angeles' : new GLatLng(34.1174, -118.2161)
+};
+
 function handleErrors(){
 	   if (gdir.getStatus().code == G_GEO_UNKNOWN_ADDRESS)
 	     alert("No corresponding geographic location could be found for one of the specified addresses. This may be due to the fact that the address is relatively new, or it may be incorrect.\nError code: " + gdir.getStatus().code);
@@ -56,7 +64,7 @@ function handleErrors(){
 function load() {
 	if (GBrowserIsCompatible()) {
 		map = new GMap2(document.getElementById("map"));
-		map.setCenter(new GLatLng(47.660, -122.35), 16);
+		map.setCenter(cities.Seattle, 16);
 		map.addControl(new GLargeMapControl());
 		map.addControl(new GScaleControl());
 		map.addControl(new GMapTypeControl());
@@ -113,6 +121,15 @@ function load() {
 		</div>
 		<h1>Pac Hac</h1>
 		<div id="map"></div>
+		<p>Select a Location: 
+			<select id="location" onchange="select(this)">
+				<option>Seattle</option>
+				<option>Portland</option>
+				<option>San Francisco</option>
+				<option>New York</option>
+				<option>Los Angeles</option>
+			</select>
+		</p>
 		<p>
 		    Press spacebar to start<br />
 		    Use the WASD to move
