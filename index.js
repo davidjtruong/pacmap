@@ -218,9 +218,28 @@ var startNode;
 function expandToDepth() {
     if (!stillPrecaching) {
         actualGameStart();
+        dumpNodes();
     } else {
         expandCachedNodes(expandToDepth);
     }
+}
+
+// dump node data to file.
+function dumpNodes() {
+	for (var node in cachedNodes) {
+		var ids = cachedNodes[node].links[0]["panoId"];
+		for (var i = 1; i < cachedNodes[node].links.length; i++) {
+			ids += " " + cachedNodes[node].links[i]["panoId"];
+		}
+		jQuery.post("save_data.php", {
+			"panoID" : node,
+			"lat" : cachedNodes[node].location.lat,
+			"lng" : cachedNodes[node].location.lng,
+			"links" : ids
+		}, function (data, textStatus) {
+			//alert(data);
+		});
+	}
 }
 
 function gameStart() {
@@ -277,7 +296,7 @@ function gameStart() {
 	    }, 5000);*/
 	}); 
 }
-
+// Keyboard controls
 // left
 shortcut.add("A", function () {
 	leftdown = true;
