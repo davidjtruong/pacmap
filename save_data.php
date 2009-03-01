@@ -11,8 +11,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 	$lng = (double)$_REQUEST["lng"];
 	$links = $_REQUEST["links"];
 	
-	mysql_query("INSERT INTO gsvdata VALUES ('{$panoID}', {$lat}, {$lng}, '{$links}')
-					ON DUPLICATE KEY UPDATE;") or die("bad");
+	mysql_query("INSERT INTO gsvdata (panoID, lat, lng, links) VALUES ('{$panoID}', {$lat}, {$lng}, '{$links}')
+					ON DUPLICATE KEY UPDATE panoID=VALUES(panoID), lat=VALUES(lat), lng=VALUES(lng), links=VALUES(links) ;") or die("bad");
 }
 
 mysql_close($db);
