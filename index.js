@@ -226,7 +226,12 @@ function expandToDepth() {
 
 // dump node data to file.
 function dumpNodes() {
-	for (var node in cachedNodes) {
+	jQuery.post("save_data.php", {
+			"node_tree" : JSON.stringify(cachedNodes)
+		}, function (data, textStatus) {
+			//alert(data);
+		});
+	/*for (var node in cachedNodes) {
 		var ids = cachedNodes[node].links[0]["panoId"];
 		for (var i = 1; i < cachedNodes[node].links.length; i++) {
 			ids += " " + cachedNodes[node].links[i]["panoId"];
@@ -239,7 +244,27 @@ function dumpNodes() {
 		}, function (data, textStatus) {
 			//alert(data);
 		});
-	}
+	}*/
+}
+
+function getNodes() {
+	var bounds = map.getBounds()
+	jQuery.getJSON("save_data.php", {
+		"ne[]" : [bounds.getNorthEast().lat(), bounds.getNorthEast().lng()],
+		"sw[]" : [bounds.getSouthWest().lat(), bounds.getSouthWest().lng()]
+	}, function (nodes) {
+		for (var n in nodes) {
+			//console.log(cachedNodes[n]);
+			var loc = new GLatLng(nodes[n][1], nodes[n][2]);
+			//console.log(nodes[n]);
+			for (var i = 0; i < nodes[n][3].length; i++) {
+				if (nodes[nodes[n][3][i]] !== undefined) {
+					var link = new GLatLng(nodes[nodes[n][3][i]][1], nodes[nodes[n][3][i]][2]);
+					map.addOverlay(new GPolyline([loc, link]));
+				} 
+			}
+		}
+	});
 }
 
 function gameStart() {
