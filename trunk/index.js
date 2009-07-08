@@ -12,6 +12,7 @@ var linklookuplock = false;
 var pacImgSwitchCount;
 var concurReq;
 var score;
+var genderFemale;
 
 // finds the diffence between two yaw angles (note: always less than 180)
 function yawDiff(yaw1, yaw2) {
@@ -19,39 +20,43 @@ function yawDiff(yaw1, yaw2) {
 }
 
 function setPacImageFromYaw(yaw) {
+	var pac = 'pacman_img/'
+	if (genderFemale) {
+		pac += 'mrs';
+	}
     if (yaw < 22.5) {
-        cPacYawImg = 'pacman_img/pacman-open-n.png';
+        cPacYawImg = pac + 'pacman-open-n.png';
         return;
     }
     if (yaw < 67.5) {
-        cPacYawImg = 'pacman_img/pacman-open-ne.png';
+        cPacYawImg = pac + 'pacman-open-ne.png';
         return;
     }
     if (yaw < 112.5) {
-        cPacYawImg = 'pacman_img/pacman-open-e.png';
+        cPacYawImg = pac + 'pacman-open-e.png';
         return;
     }
     if (yaw < 157.5) {
-        cPacYawImg = 'pacman_img/pacman-open-se.png';
+        cPacYawImg = pac + 'pacman-open-se.png';
         return;
     }
     if (yaw < 202.5) {
-        cPacYawImg = 'pacman_img/pacman-open-s.png';
+        cPacYawImg = pac + 'pacman-open-s.png';
         return;
     }
     if (yaw < 247.5) {
-        cPacYawImg = 'pacman_img/pacman-open-sw.png';
+        cPacYawImg = pac + 'pacman-open-sw.png';
         return;
     }
     if (yaw < 292.5) {
-        cPacYawImg = 'pacman_img/pacman-open-w.png';
+        cPacYawImg = pac + 'pacman-open-w.png';
         return;
     }
     if (yaw < 337.5) {
-        cPacYawImg = 'pacman_img/pacman-open-nw.png';
+        cPacYawImg = pac + 'pacman-open-nw.png';
         return;
     }
-    cPacYawImg = 'pacman_img/pacman-open-n.png';
+    cPacYawImg = pac + 'pacman-open-n.png';
 }
 
 var isUpdatingNode = false;
@@ -375,4 +380,8 @@ shortcut.add("Space", function () {
 
 function select(box) {
 	map.setCenter(cities[box.value], 16);
+}
+
+function genderChange() {
+	genderFemale = !genderFemale;
 }
